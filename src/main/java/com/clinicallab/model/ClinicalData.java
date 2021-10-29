@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -27,7 +28,7 @@ public class ClinicalData implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	private String bp;
 	private String heartRate;
 	private String bmi;
@@ -39,7 +40,7 @@ public class ClinicalData implements Serializable{
 	@JoinColumn(name = "patient_id", nullable = false) // will not insert data without patient
 	private Patient patient;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

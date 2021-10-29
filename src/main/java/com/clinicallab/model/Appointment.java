@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -17,7 +18,7 @@ public class Appointment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int apid;
+	private Integer apid;
 
 	@Column(name = "Appointment_Time")
 	private String dateTime;
@@ -32,7 +33,7 @@ public class Appointment {
 	@JoinColumn(name = "doctor_id", nullable = false)
 	private Doctor doctor;
 
-	public int getApid() {
+	public Integer getApid() {
 		return apid;
 	}
 

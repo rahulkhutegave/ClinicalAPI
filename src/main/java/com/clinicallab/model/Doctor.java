@@ -1,5 +1,6 @@
 package com.clinicallab.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,11 +14,17 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Doctor {
+public class Doctor implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int docId;
+	@JsonIgnore
+	private Integer docId;
 
 	private String name;
 
@@ -27,11 +34,13 @@ public class Doctor {
 	@JsonIgnore
 	private Set<Appointment> appointment;
 
-	public int getDocId() {
+	
+
+	public Integer getDocId() {
 		return docId;
 	}
 
-	public void setDocId(int docId) {
+	public void setDocId(Integer docId) {
 		this.docId = docId;
 	}
 
