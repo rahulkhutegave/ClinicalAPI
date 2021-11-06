@@ -19,8 +19,9 @@ public interface ClinicalService {
 	public boolean saveDoctor(Doctor doctor) throws DoctorNotFoundException;
 	public boolean saveClinicalData(ClinicalDataRequest request) throws PatientNotFoundException;
 	public boolean addAppointmentDetails(AppointmentForm appt)throws ClinicalException;
-	public List<Patient> getPatients();
-	public List<ClinicalData> getClinicalData(int id);
-	
+	public List<Patient> getPatients(int pageNo, int size);
+	public List<ClinicalData> getClinicalData(int id) throws PatientNotFoundException;
+	public List<Patient> sortPatientsByAge(int pageNo);
+	public String emailCheck(String email, String regexPattern);
 	
 }

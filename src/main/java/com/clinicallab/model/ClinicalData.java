@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "clinicaldata")
 @JsonIgnoreProperties({ "patient" })
-public class ClinicalData implements Serializable{
+public class ClinicalData implements Serializable {
 
 	/**
 	 * 
@@ -30,8 +30,12 @@ public class ClinicalData implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String bp;
-	private String heartRate;
-	private String bmi;
+	private int heartRate;
+	private int height;
+	private int weight;
+
+	@JsonIgnore
+	private float bmi;
 
 	@CreationTimestamp
 	private Time measuredDateTime;
@@ -47,8 +51,6 @@ public class ClinicalData implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public Patient getPatient() {
 		return patient;
@@ -74,24 +76,44 @@ public class ClinicalData implements Serializable{
 		this.bp = bp;
 	}
 
-	public String getHeartRate() {
+	public int getHeartRate() {
 		return heartRate;
 	}
 
-	public void setHeartRate(String heartRate) {
+	public void setHeartRate(int heartRate) {
 		this.heartRate = heartRate;
 	}
 
-	public String getBmi() {
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public float getBmi() {
 		return bmi;
 	}
 
-	public void setBmi(String bmi) {
+	public void setBmi(float bmi) {
 		this.bmi = bmi;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 
 }

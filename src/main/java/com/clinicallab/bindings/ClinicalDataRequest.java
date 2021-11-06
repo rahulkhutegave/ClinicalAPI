@@ -3,9 +3,10 @@ package com.clinicallab.bindings;
 public class ClinicalDataRequest {
 
 	private String bp;
-	private String heartRate;
-	private String bmi;
-	private int id;
+	private int heartRate;
+	private int height;
+	private int weight;
+	private int patientid;
 
 	public String getBp() {
 		return bp;
@@ -15,30 +16,36 @@ public class ClinicalDataRequest {
 		this.bp = bp;
 	}
 
-	public String getHeartRate() {
+	public int getHeartRate() {
 		return heartRate;
 	}
 
-	public void setHeartRate(String heartRate) {
+	public void setHeartRate(int heartRate) {
 		this.heartRate = heartRate;
 	}
 
-	public String getBmi() {
-		return bmi;
+	public int getHeight() {
+		return height;
 	}
 
-	public void setBmi(String bmi) {
-		this.bmi = bmi;
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
-	public int getId() {
-		return id;
+	public int getWeight() {
+		return weight;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 
-	
+	public int getPatientid() {
+		return patientid;
+	}
+
+	public void setPatientid(int patientid) {
+		this.patientid = patientid;
+	}
 
 }

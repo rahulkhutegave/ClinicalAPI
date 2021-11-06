@@ -33,10 +33,12 @@ public class ClinicalDataController {
 	}
 	
 	@GetMapping("/clinicaldata/{id}")
-	public List<ClinicalData> allClinicalDataofPatient(@PathVariable int id){
+	public List<ClinicalData> allClinicalDataofPatient(@PathVariable int id) throws PatientNotFoundException{
 		
 		return service.getClinicalData(id);
 	}
+	
+	
 	
 	
 }

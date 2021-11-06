@@ -2,10 +2,14 @@ package com.clinicallab.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.clinicallab.bindings.AppointmentForm;
@@ -63,7 +67,13 @@ public class ClinicalServiceImpl implements ClinicalService {
 		ClinicalData entity2 = new ClinicalData();
 
 		BeanUtils.copyProperties(request, entity2);
-		Patient patient = patientRepo.getById(request.getId());
+		Patient patient = patientRepo.getById(request.getPatientid());
+		int height = request.getHeight();
+		int weight = request.getWeight();
+
+		float bmi = weight / (height * height);
+		entity2.setBmi(bmi);
+
 		entity2.setPatient(patient);
 		ClinicalData clinicalData = clinicalRepo.save(entity2);
 
@@ -84,30 +94,63 @@ public class ClinicalServiceImpl implements ClinicalService {
 			app.setDoctor(isDoctor.get());
 		} else {
 			System.out.println("Give correct input for doctor and patient");
-
+			throw new ClinicalException("Give correct Input");
 		}
 		Appointment entity3 = appointmentRepo.save(app);
 		return appointmentRepo.existsById(entity3.getApid());
 	}
 
 	@Override
-	public List<Patient> getPatients() {
-		return patientRepo.findAll();
+	public List<Patient> getPatients(int pageNo, int size) {
+		PageRequest pageRequest = PageRequest.of(pageNo, size);
+		Page<Patient> page = patientRepo.findAll(pageRequest);
+		return page.getContent();
 	}
 
 	@Override
-	public List<ClinicalData> getClinicalData(int id) {
+	public List<ClinicalData> getClinicalData(int id) throws PatientNotFoundException {
 
-		
 		Optional<Patient> isData = patientRepo.findById(id);
-		if(isData.isPresent()) {
+		if (isData.isPresent()) {
 			Patient patient = isData.get();
 			return patient.getClinicalData();
+		} else {
+			throw new PatientNotFoundException("Patient NOt Found");
 		}
-		return null;
+
 	}
-	
-	
+
+	@Override
+	public List<Patient> sortPatientsByAge(int pageNo) {
+		int size = 5;
+		PageRequest pageRequest = PageRequest.of(pageNo, size, Direction.DESC, "age");
+		Page<Patient> page = patientRepo.findAll(pageRequest);
+		return page.getContent();
+	}
+
+	@Override
+	public String emailCheck(String email, String regexPattern) {
+
+		boolean istrue = Pattern.compile(regexPattern).matcher(email).matches();
+		if (istrue) {
+
+			Patient patient = new Patient();
+			patient.setEmail(email.trim());
+
+			Example<Patient> example = Example.of(patient);
+			Optional<Patient> isPatient = patientRepo.findOne(example);
+			if (isPatient.isPresent()) {
+				return "Duplicate Email ID";
+			} else {
+				return "Email is Valid";
+			}
+
+		} else {
+			return "Invalid Email Address";
+		}
+
+	}
+
 	
 
 }
