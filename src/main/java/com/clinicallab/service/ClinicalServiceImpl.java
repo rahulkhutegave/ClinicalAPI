@@ -26,6 +26,7 @@ import com.clinicallab.repository.AppointmentRepo;
 import com.clinicallab.repository.ClinicalDataRepo;
 import com.clinicallab.repository.DoctorRepository;
 import com.clinicallab.repository.PatientRepository;
+import com.clinicallab.utils.EmailUtils;
 
 @Service
 public class ClinicalServiceImpl implements ClinicalService {
@@ -68,7 +69,7 @@ public class ClinicalServiceImpl implements ClinicalService {
 
 		BeanUtils.copyProperties(request, entity2);
 		Patient patient = patientRepo.getById(request.getPatientid());
-		int height = request.getHeight();
+		float height = request.getHeight();
 		int weight = request.getWeight();
 
 		float bmi = weight / (height * height);
@@ -81,7 +82,7 @@ public class ClinicalServiceImpl implements ClinicalService {
 	}
 
 	@Override
-	public boolean addAppointmentDetails(AppointmentForm appt) throws ClinicalException {
+	public boolean addAppointmentDetails(AppointmentForm appt) throws Exception {
 
 		Appointment app = new Appointment();
 		app.setDateTime(appt.getDateTime());
@@ -97,6 +98,16 @@ public class ClinicalServiceImpl implements ClinicalService {
 			throw new ClinicalException("Give correct Input");
 		}
 		Appointment entity3 = appointmentRepo.save(app);
+		
+		
+		String message= "Hi!! \n "+"\n"
+				+ "Your appointment is confirmed. Please arrive 10 minutes early before time \n"
+				+ "Appointment Time : "+entity3.getDateTime() +"\n"+"\n"
+				+"Thank You";
+		
+		
+		EmailUtils.sendEmail(message, "Appointment Confirmation", entity3.getPatient().getEmail(), "fromEmail@gmail.com");
+		
 		return appointmentRepo.existsById(entity3.getApid());
 	}
 

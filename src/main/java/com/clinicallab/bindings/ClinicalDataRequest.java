@@ -4,7 +4,7 @@ public class ClinicalDataRequest {
 
 	private String bp;
 	private int heartRate;
-	private int height;
+	private float height;
 	private int weight;
 	private int patientid;
 
@@ -24,11 +24,11 @@ public class ClinicalDataRequest {
 		this.heartRate = heartRate;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 

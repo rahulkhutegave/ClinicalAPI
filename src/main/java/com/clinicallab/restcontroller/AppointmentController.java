@@ -17,7 +17,7 @@ public class AppointmentController {
 	private ClinicalService service;
 
 	@PostMapping("/saveappt")
-	public String giveAppointment(@RequestBody AppointmentForm appt) throws ClinicalException {
+	public String giveAppointment(@RequestBody AppointmentForm appt) throws Exception {
 
 		boolean istrue = service.addAppointmentDetails(appt);
 		if (istrue) {

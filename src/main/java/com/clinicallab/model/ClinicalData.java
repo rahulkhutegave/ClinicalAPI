@@ -31,10 +31,9 @@ public class ClinicalData implements Serializable {
 	private Integer id;
 	private String bp;
 	private int heartRate;
-	private int height;
+	private float height;
 	private int weight;
 
-	@JsonIgnore
 	private float bmi;
 
 	@CreationTimestamp
@@ -84,11 +83,11 @@ public class ClinicalData implements Serializable {
 		this.heartRate = heartRate;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 
